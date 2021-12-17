@@ -1,0 +1,8 @@
+import { pegarImagemDoInput } from "./tratadores.js"
+
+// declare global {
+//     interface Window {
+//         gerarMosaico?: Function;
+//         GPU?: Any;
+//     }
+// } 

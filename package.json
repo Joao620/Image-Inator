@@ -1,0 +1,41 @@
+{
+  "name": "imagem-inator-webgl",
+  "version": "1.0.0",
+  "description": "A image mosaic tool with GPU acceleration for javascript that works in node and the browser",
+  "main": "src/debugger.ts",
+  "browser": {},
+  "browserify-shim": {
+    "gpu.js": "global:GPU"
+  },
+  "scripts": {
+    "start": "ts-node src/debugger.ts",
+    "dev": "watchify ./src/browser.ts -p [ tsify ] -r ./src/teste.ts:fs | node",
+    "build": "browserify -e ./src/browser.ts -p [ tsify ] -r ./src/teste.ts:fs | node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/yargs": "^17.0.3",
+    "browserify": "^17.0.0",
+    "gpu.js": "^2.11.4",
+    "image-size": "^1.0.0",
+    "node-canvas": "^2.7.0",
+    "tsify": "^5.0.4",
+    "utils": "^0.3.1",
+    "yargs": "^17.2.1"
+  },
+  "devDependencies": {
+    "@digitak/esrun": "^2.0.1",
+    "@types/node": "^16.11.11",
+    "browserify-shim": "^3.8.14",
+    "gulp": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "js-profiler": "^2.5.2",
+    "source-map-support": "^0.5.20",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.2",
+    "watchify": "^4.0.0"
+  }
+}

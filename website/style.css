@@ -1,0 +1,116 @@
+.wrapper-label { 
+    position: relative
+}
+
+* {
+    box-sizing: content-box;
+}
+
+.foco {
+    box-shadow: 0 0 0 2pt white;
+    transition: box-shadow .1s;
+}
+
+.sem-foco::after {
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: #80808080;
+    border-radius: inherit;
+    cursor: not-allowed;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.fundo-arr-fg {
+    padding: .5em;
+    border-radius: 1em;
+    width: 80%;
+    background-color: #4FA9B2;
+}
+
+body {
+    background-color: #3F888F;
+    display: flex;
+    flex-direction: row;
+    font-family: sans-serif;
+    color: #000;
+}
+
+.imagem-preview {
+    width: 161%;
+}
+
+.inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    
+    .imagem-preview {
+        width: 100%;
+    }
+}
+
+.inputs > * {
+    margin-top: 1em;
+}
+
+.import-image {
+    position: relative;
+}
+
+.import-image__label {
+    text-align: center;
+    display: block;
+}
+
+.select-blocks {
+    position: relative;
+}
+
+.select-blocks__label {
+    text-align: center;
+    display: block;
+}
+
+.select-blocks__select {
+    display: block;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.block-quantity {
+    position: relative;
+}
+
+.block-quantity__label {
+    display: block;
+    text-align: center;
+}
+
+.wrapper-input-tamanho {
+    display: block;
+}
+
+.bnt-criar-imagem {
+    background-color: #B2584F;
+    color: white;
+    font-size: 100%;
+    border:none;
+    background-image:none;
+    box-shadow: none;
+    cursor: pointer;
+    position: relative;
+}
+
+

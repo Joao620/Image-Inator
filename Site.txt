@@ -1,0 +1,15 @@
+Logo para ir pro github no canto
+
+Vai ser só uma pagina
+
+Talvez uma coluna centra para web
+
+Vai ter três opções de quantidade de pixagens
+    mantendo o tamanho original dela e colocando o maximo que poder em cima da imagem original
+    colocando o tamanho maximo para um dos eixos, e o outro eixo sera automatico
+    com uma propocao entre pixels da foto para pixagens
+    
+
+eh o seguinte, eu vou usar uma biblioteca em js para transformar a pasta de imagens em tar, e talvez comprimir tmb
+tem um site cheio de datasets de imagems, alguma coisa como kegglo sla
+e o site vai ter compatibilidade caso o usuario nao tenha webgl, rodando em js mesmo, titi

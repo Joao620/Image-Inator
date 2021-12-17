@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dedo no cu e putarai</title>
+    <link rel="stylesheet" type="text/css" href="style.css"> 
+    <script src="https://unpkg.com/gpu.js@latest/dist/gpu-browser.min.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <script src="index.js" type="module"></script>
+</head>
+<body x-cloak>
+
+    <div class="imagem-preview"></div>
+
+    <div class="inputs" x-data="{faseAtual: 1}">
+
+        <div class="import-image fundo-arr-fg" x-data="{essaFase: 1}" x-bind:class="faseAtual >= essaFase? 'foco': 'sem-foco' ">
+            <label class="import-image__label">import the image</label>
+            <input class="import-image__input" type="file" x-on:change="faseAtual = 2">
+        </div>
+
+        <div class="select-blocks fundo-arr-fg" x-data="{essaFase: 2}" x-bind:class="faseAtual >= essaFase? 'foco': 'sem-foco' ">
+            <label class="select-blocks__label">select the block images</label>
+            <select class="select-blocks__select" x-on:change='faseAtual = 3'>
+                <option value="">isso</option>
+                <option value="">eh</option>
+                <option value="">um</option>
+                <option value="">teste</option>
+            </select>
+        </div>
+
+        <div class="block-quantity fundo-arr-fg" x-data="{essaFase: 3}" x-bind:class="faseAtual >= essaFase? 'foco': 'sem-foco' ">
+            <label class="block-quantity__label">chose the quantity of blocks</label>
+            <div x-data="{selecionado: ''}" class="block-quantity__radio">
+
+
+                <div class="escolhas-metodo-pixagem" x-data="{esteSelecionado: false}">
+                    <input 
+                        type="radio" 
+                        id="escolha-tamanho-original" 
+                        name="escolhaPixagem" 
+                        x-on:change="selecionado = $el.id"
+                        x-effect="esteSelecionado = selecionado === $el.id"
+                    >
+    
+                    <span class="wrapper-label">
+                        <label for="escolha-tamanho-original">Tamanho original dos blocos imagens</label>
+                    </span>
+                </div>
+    
+                <div class="escolhas-metodo-pixagem" x-data="{esteSelecionado: false}">
+                    <input 
+                        type="radio" 
+                        id="pixagem-por-eixo" 
+                        name="escolhaPixagem"
+                        x-on:change="selecionado = $el.id"
+                        x-effect="esteSelecionado = selecionado === $el.id"
+                    >
+    
+                    <span class="wrapper-label">
+                    <label 
+                        for="pixagem-por-eixo">
+                    definir a quantidade de blocos em um eixo</label>
+                    </span>
+    
+                    <div x-show="esteSelecionado" x-data="{largura: 0, altura: 0}">
+                        <span class="wrapper-input-tamanho">
+                            <label for="input-largura">width</label>
+                            <input 
+                                type="text" 
+                                id="input-largura"
+                                x-model="largura"
+                                x-effect="$el.value = altura + '1'"
+                            >
+                        </span> 
+    
+                        <span class="wrapper-input-tamanho">
+                            <label for="input-altura">height</label>
+                            <input 
+                                type="text" 
+                                id="input-altura" 
+                                x-model="altura"
+                                x-effect="$el.value = largura + '2'"
+                            >
+                        </span>
+                    </div>
+                </div>
+    
+                <div class="escolhas-metodo-pixagem" x-data="{esteSelecionado: false}">
+                    <input 
+                        type="radio" 
+                        id="pixagem-proporcional" 
+                        name="escolhaPixagem"
+                        x-on:change="selecionado = $el.id"
+                        x-effect="esteSelecionado = selecionado === $el.id"
+                    >
+    
+                    <span class="wrapper-label">
+                    <label 
+                        for="pixagem-proporcional">
+                        Proporcional</label>
+                    </span>
+    
+                    <div x-show="esteSelecionado">
+                        <label for="input-proporcao">proporcao:</label>
+                        <input type="text" id="input-proporcao">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button 
+            class="bnt-criar-imagem fundo-arr-fg" 
+            x-data="{essaFase: 4}" 
+            x-bind:class="faseAtual >= essaFase? 'foco': 'sem-foco' ">
+        create the image</button>
+    </div>
+
+</body>
+
+</html>
