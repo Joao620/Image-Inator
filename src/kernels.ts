@@ -4,6 +4,7 @@ interface calcularMediaCoresThis extends IKernelFunctionThis{
   constants: {altura: number, largura: number, divisoesAltura: number, divisoesLargura: number}
 }
 
+//imagem com os eixos imagem[y][x], centro top left
 export function calcularMediaCores(this: calcularMediaCoresThis, imagem: number[][][]): number[]{
     let somaR = 0
     let somaG = 0
@@ -37,36 +38,31 @@ interface BFKNNSThis extends IKernelFunctionThis {
 }
 
 export function BFKNNS(this: BFKNNSThis, coresImagemMosaico: number[][][], corPixagem: number[][]){
-  let pixagemMaisProxima = [0, 0];
-  let valorPixagemMaisProxima = [768, 768];
+  const { x, y } = this.thread
+  const threadCor = coresImagemMosaico[y][x]
 
-  const threadCor = coresImagemMosaico[this.thread.x][this.thread.y]
+  let pixagemMaisProxima = 0.0
+  let valorPixagemMaisProxima = 99999999.0
 
   for(let i = 0; i < this.constants.quantCoresPixagem; i++){
 
     const pixagemAtual = corPixagem[i]
 
-      const catetoX = threadCor[0] - pixagemAtual[0]
-      const catetoY = threadCor[1] - pixagemAtual[1]
-      const catetoZ = threadCor[2] - pixagemAtual[2]
+    const catetoX = Math.abs(pixagemAtual[0] - threadCor[0])
+    const catetoY = Math.abs(pixagemAtual[1] - threadCor[1])
+    const catetoZ = Math.abs(pixagemAtual[2] - threadCor[2])
 
-      const distanciaEucludiana = Math.sqrt(
-          catetoX * catetoX +
-          catetoY * catetoY +
-          catetoZ * catetoZ
-      )
+    const distancia = catetoX + catetoY + catetoZ
 
+    if(distancia < valorPixagemMaisProxima){
+      pixagemMaisProxima = i
+      valorPixagemMaisProxima = distancia
+    }
 
-      if(distanciaEucludiana < valorPixagemMaisProxima[0]){
-        pixagemMaisProxima[0] = i
-        valorPixagemMaisProxima[0] = distanciaEucludiana
-      } else if(distanciaEucludiana < valorPixagemMaisProxima[1]){
-        pixagemMaisProxima[1] = i
-        valorPixagemMaisProxima[1] = distanciaEucludiana
-      }
   }
 
   return pixagemMaisProxima
+
 }
 
 interface criarImagemFinalThis extends IKernelFunctionThis {

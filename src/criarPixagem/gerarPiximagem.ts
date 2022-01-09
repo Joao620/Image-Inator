@@ -4,7 +4,7 @@ import { join } from "path";
 
 import imageSize from "image-size";
 
-import { cor, Imagem, ImagemComNome } from './types'
+import { cor, Imagem, ImagemComNome } from '../types'
 
 import gerarPixagem from './createImageBlock'
 
@@ -66,6 +66,6 @@ async function salvarPixagem(blocaoPixagens: Imagem, cores: cor[], nomesImagens:
 export default async function gerarPiximage(imagesDir: string, outputDir: string) {
   const imagens = await lerImagensDePasta(imagesDir)
   const listaNomes = imagens.map(v => v.nome)
-  const [blocao, cores] = await gerarPixagem(imagens, 1, 2)
+  const [blocao, cores] = await gerarPixagem(imagens, 1, 1)
   salvarPixagem(blocao, cores, listaNomes, outputDir)
 }

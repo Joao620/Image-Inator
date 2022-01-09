@@ -1,14 +1,14 @@
 import { GPU, Input } from "gpu.js";
-import { createCanvas, loadImage } from 'node-canvas'
+import { createCanvas, loadImage } from 'canvas'
 
-import { cor, Imagem } from "./types";
-import { calcularMediaCores } from './kernels'
+import { cor, Imagem } from "../types";
+import { calcularMediaCores } from '../kernels'
 
 export default async function gerarPixagem(imagensCodificadas: Imagem[], proporcaoEscolida: number, reducaoTamanho: number): Promise<[Imagem, cor[]]>{
     //TODO: Isso parece que vai gastar memoria pra porra
     const blocaoCanvas = await criarBlocaoImagem(imagensCodificadas, proporcaoEscolida, reducaoTamanho)
     
-    //nao sei se esse -1 funcionar, mas eu confio que vai
+    //
     const blocaoData = blocaoCanvas.getContext('2d').getImageData(0, 0, blocaoCanvas.width, blocaoCanvas.height)
 
     const coresBlocao = pegarCoresBlocao(blocaoData, imagensCodificadas.length)
@@ -16,6 +16,7 @@ export default async function gerarPixagem(imagensCodificadas: Imagem[], proporc
     const blocaoCodificado: Imagem = {
         largura: blocaoCanvas.width,
         altura: blocaoCanvas.height,
+        //talvez passar isso para ImageData pra ficar compativel com a web
         dados: blocaoCanvas.toBuffer('image/png')
     }
     
@@ -39,10 +40,10 @@ function pegarCoresBlocao(blocao: ImageData, quantidadeImagens: number){
     //@ts-expect-error
     const imagemDimensional = new Input(blocao.data, [4, laguraImagem, alturaImagens * quantidadeImagens])
 
-    const resultadoKernelCores = kernelCores(imagemDimensional) as Float32Array[][]
+    const resultadoKernelCores = kernelCores(imagemDimensional) as cor[][]
 
     const resultadoCores: cor[] = resultadoKernelCores[0].map(arr => (
-        {r: Math.round(arr[0]), g: Math.round(arr[1]), b: Math.round(arr[2])}
+        [Math.round(arr[0]), Math.round(arr[1]), Math.round(arr[2])]
     ))
 
     return resultadoCores

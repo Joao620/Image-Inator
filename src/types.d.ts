@@ -8,7 +8,20 @@ export interface ImagemComNome extends Imagem {
     nome: string
 }
 
-export interface cor {
-    [key: string] : number
-    r: number, g: number, b: number
+export type cor = [number, number, number]
+
+export interface ColecaoPixagem {
+  readonly imagem: Image
+  readonly larguraIndividual: number
+  readonly alturaIndividial: number
+  readonly quantidadePixagens: number
+  readonly cores: cor[]
+}
+
+export interface ImagemParaMosaico {
+  readonly imagem: ImageData
+  readonly quantDivisoesLargura: number
+  readonly quantDivisoesAltura: number
+  readonly tamDivisoesLargura: number
+  readonly tamDivisoesAltura: number
 }
