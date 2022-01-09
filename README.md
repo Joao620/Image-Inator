@@ -1,7 +1,7 @@
 # GPU Image Mosaic
 > A blazing fast Image Mosaic generator
 
-![]()
+![Example of generated image](example.png)
 ## Internal working
 It uses [GPU.js](gpu.rocks) to do the heavy lift of calculate and compare images, and Canvas API to encode and decode the images, so all the technologies are browser compatible, and JavaScript only moves data around 
 
