@@ -3,7 +3,7 @@
 
 ![]()
 ## Internal working
-It uses [GPU.js]() to do the heavy lift of calculate and compare images, and Canvas API to encode and decode the images, so all the technologies are browser compatible, and JavaScript only moves data around 
+It uses [GPU.js](gpu.rocks) to do the heavy lift of calculate and compare images, and Canvas API to encode and decode the images, so all the technologies are browser compatible, and JavaScript only moves data around 
 
 ## How fast
 It doesn't have benchmarks, but it is obvious that in a browser environment, that only support JS ( maybe WASM too ) programming, the faster way to do it is putting the GPU to work. Now, running a program in your computer, with no limitations to JS, i am not sure how fast it compared to the alternatives, maybe with some optimization is faster, but how knows
