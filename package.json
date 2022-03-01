@@ -2,7 +2,7 @@
   "name": "gpu-image-mosaic",
   "version": "1.0.0",
   "description": "A image mosaic tool with GPU acceleration for javascript that works in node and the browser",
-  "main": "src/debugger.ts",
+  "main": "./dist/index.js",
   "browser": {},
   "browserify-shim": {
     "gpu.js": "global:GPU"
