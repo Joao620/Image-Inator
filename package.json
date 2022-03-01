@@ -1,8 +1,10 @@
 {
-  "name": "gpu-image-mosaic",
+  "name": "mosaic-inator",
   "version": "1.0.0",
   "description": "A image mosaic tool with GPU acceleration for javascript that works in node and the browser",
   "main": "./dist/index.js",
+  "type": "commonjs",
+  "types": "./dist",
   "browser": {},
   "browserify-shim": {
     "gpu.js": "global:GPU"
@@ -16,23 +18,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/yargs": "^17.0.3",
-    "browserify": "^17.0.0",
     "canvas": "^2.8.0",
-    "expect.js": "^0.3.1",
     "gpu.js": "^2.11.4",
     "image-size": "^1.0.0",
-    "tsify": "^5.0.4",
-    "utils": "^0.3.1",
     "yargs": "^17.2.1"
   },
   "devDependencies": {
-    "@digitak/esrun": "^2.0.1",
+    "@types/yargs": "^17.0.3",
     "@types/node": "^16.11.11",
     "browserify-shim": "^3.8.14",
-    "gulp": "^4.0.2",
-    "gulp-typescript": "^6.0.0-alpha.1",
-    "js-profiler": "^2.5.2",
     "source-map-support": "^0.5.20",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
