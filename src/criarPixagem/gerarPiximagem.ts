@@ -28,13 +28,14 @@ async function lerImagensDePasta(caminhoPasta: string): Promise<ImagemComNome[]>
     bufferImagensEmEspera.push(readFile(caminhoImagem));
   }
 
-  const saida: ImagemComNome[] =[]
+  const saida: ImagemComNome[] = []
 
   for (let i = 0; i < listaNomesImagens.length; i++) {
     const nomeImagem = listaNomesImagens[i];
 
     const bufferCodificado = await bufferImagensEmEspera[i];
 
+    //TODO: renomear o largua
     const {width: largua, height: altura} = imageSize(bufferCodificado)
     if(largua === undefined || altura === undefined) throw `imagem ${nomeImagem} esta com uma das dimensoes corrompidas sla`
     

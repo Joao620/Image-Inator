@@ -6,13 +6,15 @@
   "type": "commonjs",
   "types": "./dist",
   "browser": {},
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
   "browserify-shim": {
     "gpu.js": "global:GPU"
   },
   "scripts": {
     "start": "ts-node src/debugger.ts",
-    "dev": "watchify ./src/browser.ts -p [ tsify ] -r ./src/teste.ts:fs | node",
-    "build": "browserify -e ./src/browser.ts -p [ tsify ] -r ./src/teste.ts:fs | node"
+    "browser-build": "tsc && browserify dist/browser.js"
   },
   "keywords": [],
   "author": "",
@@ -21,15 +23,17 @@
     "canvas": "^2.8.0",
     "gpu.js": "^2.11.4",
     "image-size": "^1.0.0",
+    "utils": "^0.3.1",
     "yargs": "^17.2.1"
   },
   "devDependencies": {
-    "@types/yargs": "^17.0.3",
     "@types/node": "^16.11.11",
+    "@types/yargs": "^17.0.3",
     "browserify-shim": "^3.8.14",
     "source-map-support": "^0.5.20",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
+    "tsify": "^5.0.4",
     "typescript": "^4.5.2",
     "watchify": "^4.0.0"
   }

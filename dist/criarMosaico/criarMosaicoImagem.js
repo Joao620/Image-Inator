@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const comparacaoPiximagem_1 = __importDefault(require("./comparacaoPiximagem"));
 const canvas_1 = require("canvas");
-const fs_1 = require("fs");
 function criarImagemMosaico(imagem, coresPixagem, imagemPixagem, proporcaoPiximagem, cpuMode) {
     return __awaiter(this, void 0, void 0, function* () {
         const colecaoPixagem = carregarPiximagem(imagemPixagem, coresPixagem);
@@ -82,7 +81,6 @@ function gerarImagemMosaico(escolhasPixagem, colecaoPixagem, imagemParaMosaico, 
                 ctxMosaico.drawImage(imagemPixagem, colecaoPixagem.larguraIndividual * proporcaoImagemFinal * x, colecaoPixagem.alturaIndividial * proporcaoImagemFinal * y);
             }
         }
-        const buff = canvasMosaico.toBuffer('image/png');
-        (0, fs_1.writeFileSync)('dale.png', buff);
+        return canvasMosaico;
     });
 }

@@ -1,7 +1,6 @@
 import comparacaoPiximagem from "./comparacaoPiximagem";
 import { cor, ColecaoPixagem, ImagemParaMosaico } from '../types'
 import { createCanvas, Image } from "canvas";
-import { writeFileSync } from "fs";
 
 export default async function criarImagemMosaico(imagem: Image, coresPixagem: cor[], imagemPixagem: Image, proporcaoPiximagem: number, cpuMode: boolean){
   const colecaoPixagem: ColecaoPixagem = carregarPiximagem(imagemPixagem, coresPixagem)
@@ -107,6 +106,9 @@ async function gerarImagemMosaico(escolhasPixagem: Float32Array[], colecaoPixage
     }
   }
 
-  const buff = canvasMosaico.toBuffer('image/png')
-  writeFileSync('dale.png', buff)
+  return canvasMosaico
+
+  //TODO: aqui que o arquivo eh salvo
+  //const buff = canvasMosaico.toBuffer('image/png')
+  //writeFileSync('dale.png', buff)
 }
