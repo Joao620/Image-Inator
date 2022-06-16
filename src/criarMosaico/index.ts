@@ -1,9 +1,8 @@
 import criarImagemMosaico from "./criarMosaicoImagem";
-import imageSize from "image-size";
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
-import {createImageData, loadImage} from "canvas";
-import { cor } from '../types'
+import { loadImage } from "canvas";
+import { cor, OpcoesCriarMosaico } from '../types'
 
 export default async function nodeWrapper(imagePath: string, piximageDir: string, cpuMode: boolean, proporcaoPiximagem: number){
   if(!existsSync(piximageDir)) throw 'Piximage dir dosen\'t exist'
@@ -19,5 +18,11 @@ export default async function nodeWrapper(imagePath: string, piximageDir: string
   const piximageConfig = JSON.parse(piximageConfigBuffer)
   const cores = Object.values(piximageConfig) as cor[]
 
-  await criarImagemMosaico(imagemParaMosaico, cores, imagemPixagem, proporcaoPiximagem, cpuMode)
+  const opcoesCriarMosaico: OpcoesCriarMosaico = {
+    cpuMode: false,
+    reducaoImagemFinal: 1,
+    aspectRatio: 1,
+  }
+
+  await criarImagemMosaico(imagemParaMosaico, cores, imagemPixagem, opcoesCriarMosaico)
 }

@@ -1,4 +1,4 @@
-import { IKernelFunctionThis } from 'gpu.js';
+import { IConstantsThis, IKernelFunctionThis } from 'gpu.js';
 
 interface calcularMediaCoresThis extends IKernelFunctionThis{
   constants: {altura: number, largura: number, divisoesAltura: number, divisoesLargura: number}
@@ -33,16 +33,23 @@ export function calcularMediaCores(this: calcularMediaCoresThis, imagem: number[
     return [somaR, somaG, somaB]
 }
 
-interface BFKNNSThis extends IKernelFunctionThis {
-  constants: {quantCoresPixagem: number}
+interface BFKNNSContants extends IConstantsThis {
+  quantCoresPixagem: number,
 }
 
-export function BFKNNS(this: BFKNNSThis, coresImagemMosaico: number[][][], corPixagem: number[][]){
+interface BFKNNSThis extends IKernelFunctionThis {
+  constants: BFKNNSContants,
+}
+
+export function BFKNNS(this: BFKNNSThis, coresImagemMosaico: number[][][], corPixagem: number[][]): number{
   const { x, y } = this.thread
   const threadCor = coresImagemMosaico[y][x]
 
-  let pixagemMaisProxima = 0.0
+  let pixagemMaisProxima = 0
   let valorPixagemMaisProxima = 99999999.0
+
+  let segundaPixagemMaisProxima = 0
+  let segundoValorPixagemMaisProxima = 99999999.0
 
   for(let i = 0; i < this.constants.quantCoresPixagem; i++){
 
@@ -55,13 +62,31 @@ export function BFKNNS(this: BFKNNSThis, coresImagemMosaico: number[][][], corPi
     const distancia = catetoX + catetoY + catetoZ
 
     if(distancia < valorPixagemMaisProxima){
+      segundaPixagemMaisProxima = pixagemMaisProxima
+      segundoValorPixagemMaisProxima = valorPixagemMaisProxima
       pixagemMaisProxima = i
       valorPixagemMaisProxima = distancia
+    } else if (distancia < segundoValorPixagemMaisProxima){
+      segundaPixagemMaisProxima = i
+      segundoValorPixagemMaisProxima = distancia
     }
 
   }
 
-  return pixagemMaisProxima
+  let indexMatrix = [
+    [0 / 4, 3 / 4],
+    [2 / 4, 1 / 4],
+  ]
+
+  let matrixX = x % 2
+  let matrixY = y % 2
+
+  //let distanciaTotal = segundoValorPixagemMaisProxima - primeiroValorPixagemMaisProxima;
+  const proximidadePixagemMaisProxima = (segundaPixagemMaisProxima - pixagemMaisProxima) / (segundaPixagemMaisProxima + pixagemMaisProxima)
+
+  return proximidadePixagemMaisProxima < indexMatrix[matrixX][matrixY] ? pixagemMaisProxima : segundaPixagemMaisProxima
+
+  //return [pixagemMaisProxima, segundaPixagemMaisProxima]
 
 }
 

@@ -2,3 +2,5 @@ node_modules/
 Pixagens/
 website/
 build/
+test/
+dist/

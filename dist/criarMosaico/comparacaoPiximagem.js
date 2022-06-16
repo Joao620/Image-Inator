@@ -39,3 +39,4 @@ function compararBlocosParecidos(mediaCoresMosaico, coresPixagem, cpuMode) {
     const resultadoKernelCores = kernelCores(mediaCoresMosaico, coresPixagemValues);
     return resultadoKernelCores;
 }
+//# sourceMappingURL=comparacaoPiximagem.js.map

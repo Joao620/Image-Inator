@@ -1,14 +1,19 @@
 import comparacaoPiximagem from "./comparacaoPiximagem";
-import { cor, ColecaoPixagem, ImagemParaMosaico } from '../types'
+import type { cor, ColecaoPixagem, ImagemParaMosaico, OpcoesCriarMosaico } from '../types'
 import { createCanvas, Image } from "canvas";
 
-export default async function criarImagemMosaico(imagem: Image, coresPixagem: cor[], imagemPixagem: Image, proporcaoPiximagem: number, cpuMode: boolean){
-  const colecaoPixagem: ColecaoPixagem = carregarPiximagem(imagemPixagem, coresPixagem)
-  const imagemParaMosaico: ImagemParaMosaico = carregarImagemParaMosaico(imagem, proporcaoPiximagem, colecaoPixagem)
+export default async function criarImagemMosaico(
+    imagem: Image,
+    coresPixagem: cor[], 
+    pixagemAtlas: Image, 
+    opcoesCriarMosaico: OpcoesCriarMosaico
+  ){
+  const colecaoPixagem: ColecaoPixagem = carregarPiximagem(pixagemAtlas, coresPixagem)
+  const imagemParaMosaico: ImagemParaMosaico = carregarImagemParaMosaico(imagem, opcoesCriarMosaico.aspectRatio, colecaoPixagem)
 
-  const resultadoComparacoes = comparacaoPiximagem(colecaoPixagem, imagemParaMosaico, cpuMode)
+  const resultadoComparacoes = comparacaoPiximagem(colecaoPixagem, imagemParaMosaico, opcoesCriarMosaico.cpuMode)
 
-  gerarImagemMosaico(resultadoComparacoes, colecaoPixagem, imagemParaMosaico, .5)
+  return gerarImagemMosaico(resultadoComparacoes, colecaoPixagem, imagemParaMosaico, opcoesCriarMosaico.reducaoImagemFinal)
 }
 
 function carregarPiximagem(imagemPixagem: Image, coresPixagem: cor[]): ColecaoPixagem {
@@ -78,15 +83,15 @@ async function gerarImagemMosaico(escolhasPixagem: Float32Array[], colecaoPixage
     const ctxPixagem = canvasPixagem.getContext('2d', { alpha: false })
 
     ctxPixagem.drawImage(
-    colecaoPixagem.imagem,
-    0,
-    alturaIndividial * i,
-    larguraIndividual,
-    alturaIndividial,
-    0,
-    0,
-    larguraPixagem,
-    alturaPixagem,
+      colecaoPixagem.imagem,
+      0,
+      alturaIndividial * i,
+      larguraIndividual,
+      alturaIndividial,
+      0,
+      0,
+      larguraPixagem,
+      alturaPixagem,
     )
 
     imagensPixagemIndividual.push(canvasPixagem)
@@ -107,8 +112,4 @@ async function gerarImagemMosaico(escolhasPixagem: Float32Array[], colecaoPixage
   }
 
   return canvasMosaico
-
-  //TODO: aqui que o arquivo eh salvo
-  //const buff = canvasMosaico.toBuffer('image/png')
-  //writeFileSync('dale.png', buff)
 }

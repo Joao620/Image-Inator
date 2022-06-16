@@ -1,33 +1,33 @@
 import { GPU, Input } from "gpu.js";
 import { createCanvas, loadImage } from 'canvas'
 
-import { cor, Imagem } from "../types";
+import { cor, Imagem, OpcoesPixImage } from "../types";
 import { calcularMediaCores } from '../kernels'
 
-export default async function gerarPixagem(imagensCodificadas: Imagem[], proporcaoEscolida: number, reducaoTamanho: number): Promise<[Imagem, cor[]]>{
+export default async function gerarPixagem(imagensCodificadas: Imagem[], opcoesPixImage: OpcoesPixImage): Promise<[Imagem, cor[]]>{
     //TODO: Isso parece que vai gastar memoria pra porra
-    const blocaoCanvas = await criarBlocaoImagem(imagensCodificadas, proporcaoEscolida, reducaoTamanho)
-    
-    //
-    const blocaoData = blocaoCanvas.getContext('2d').getImageData(0, 0, blocaoCanvas.width, blocaoCanvas.height)
+    const atlasCanvas = await criarBlocaoImagem(imagensCodificadas, opcoesPixImage.aspectRatio, opcoesPixImage.reducaoImagemFinal)
 
-    const coresBlocao = pegarCoresBlocao(blocaoData, imagensCodificadas.length)
+    const blocaoData = atlasCanvas.getContext('2d').getImageData(0, 0, atlasCanvas.width, atlasCanvas.height)
+
+    const coresAtlas = pegarCoresBlocao(blocaoData, imagensCodificadas.length, opcoesPixImage.cpuMode)
 
     const blocaoCodificado: Imagem = {
-        largura: blocaoCanvas.width,
-        altura: blocaoCanvas.height,
+        largura: atlasCanvas.width,
+        altura: atlasCanvas.height,
+        //TODO: isso eh pessimo, nunca que vai rodar na web
         //talvez passar isso para ImageData pra ficar compativel com a web
-        dados: blocaoCanvas.toBuffer('image/png')
+        dados: atlasCanvas.toBuffer('image/png')
     }
     
-    return [blocaoCodificado, coresBlocao]
+    return [blocaoCodificado, coresAtlas]
 }
 
-function pegarCoresBlocao(blocao: ImageData, quantidadeImagens: number){
+function pegarCoresBlocao(blocao: ImageData, quantidadeImagens: number, cpuMode: boolean){
     const laguraImagem = blocao.width
     const alturaImagens = blocao.height / quantidadeImagens
 
-    const gpu = new GPU()
+    const gpu = new GPU({mode: cpuMode ? 'cpu' : 'gpu'})
 
     const configs = {
         output: [quantidadeImagens, 1],
@@ -49,12 +49,12 @@ function pegarCoresBlocao(blocao: ImageData, quantidadeImagens: number){
     return resultadoCores
 }
 
-export async function criarBlocaoImagem(imagens: Imagem[], proporcaoEscolida: number, reducaoTamanho: number){
+export async function criarBlocaoImagem(imagens: Imagem[], aspectRatio: number, reducaoTamanho: number){
     let somaTamanhoLargura = 0
     let somaTamanhoAltura = 0
 
     imagens.forEach(imagem => {
-        const {largura, altura} = corteParaProporcao(imagem.largura, imagem.altura, proporcaoEscolida)
+        const {largura, altura} = corteParaProporcao(imagem.largura, imagem.altura, aspectRatio)
         somaTamanhoLargura += largura
         somaTamanhoAltura += altura
     })
@@ -75,7 +75,7 @@ export async function criarBlocaoImagem(imagens: Imagem[], proporcaoEscolida: nu
         //@ts-expect-error
         const imagemInteira = await loadImage(imagem.dados)
 
-        const {largura, altura} = corteParaProporcao(imagem.largura, imagem.altura, proporcaoEscolida)
+        const {largura, altura} = corteParaProporcao(imagem.largura, imagem.altura, aspectRatio)
 
         const larguraCortada = Math.abs(imagem.largura - largura)
         const origemLargura = Math.floor(larguraCortada / 2)

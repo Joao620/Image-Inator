@@ -4,11 +4,11 @@ import { join } from "path";
 
 import imageSize from "image-size";
 
-import { cor, Imagem, ImagemComNome } from '../types'
+import type { cor, Imagem, ImagemComNome, OpcoesPixImage } from '../types'
 
 import gerarPixagem from './createImageBlock'
 
-async function lerImagensDePasta(caminhoPasta: string): Promise<ImagemComNome[]> {
+async function lerImagensDaPasta(caminhoPasta: string): Promise<ImagemComNome[]> {
   if (!existsSync(caminhoPasta)) {
     throw new Error("pasta nao existe");
   }
@@ -64,9 +64,14 @@ async function salvarPixagem(blocaoPixagens: Imagem, cores: cor[], nomesImagens:
   writeFile(join(pastaSaida, 'piximage.png'), blocaoPixagens.dados)
 }
 
-export default async function gerarPiximage(imagesDir: string, outputDir: string) {
-  const imagens = await lerImagensDePasta(imagesDir)
+export default async function gerarPiximage(imagesDir: string, opcoesPixImage: OpcoesPixImage) {
+  const imagens = await lerImagensDaPasta(imagesDir)
   const listaNomes = imagens.map(v => v.nome)
-  const [blocao, cores] = await gerarPixagem(imagens, 1, 1)
-  salvarPixagem(blocao, cores, listaNomes, outputDir)
+  const [blocao, cores] = await gerarPixagem(imagens, opcoesPixImage)
+  //salvarPixagem(blocao, cores, listaNomes, outputDir)
+  return {
+    blocao,
+    cores,
+    listaNomes
+  }
 }

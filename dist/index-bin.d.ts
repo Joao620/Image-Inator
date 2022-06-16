@@ -1,1 +1,1 @@
-export {};
+//# sourceMappingURL=index-bin.d.ts.map

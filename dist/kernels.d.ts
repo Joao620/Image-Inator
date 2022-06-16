@@ -15,3 +15,4 @@ interface BFKNNSThis extends IKernelFunctionThis {
 }
 export declare function BFKNNS(this: BFKNNSThis, coresImagemMosaico: number[][][], corPixagem: number[][]): number;
 export {};
+//# sourceMappingURL=kernels.d.ts.map

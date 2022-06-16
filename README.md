@@ -1,5 +1,5 @@
 # GPU Image Mosaic
-> A blazing fast Image Mosaic generator
+> A GPU accelerated Image Mosaic generator for the web
 
 ![Example of generated image](example.png)
 ## Internal working

@@ -1,3 +1,4 @@
-import { cor } from '../types';
+import type { cor, OpcoesCriarMosaico } from '../types';
 import { Image } from "canvas";
-export default function criarImagemMosaico(imagem: Image, coresPixagem: cor[], imagemPixagem: Image, proporcaoPiximagem: number, cpuMode: boolean): Promise<void>;
+export default function criarImagemMosaico(imagem: Image, coresPixagem: cor[], pixagemAtlas: Image, opcoesCriarMosaico: OpcoesCriarMosaico): Promise<import("canvas").Canvas>;
+//# sourceMappingURL=criarMosaicoImagem.d.ts.map

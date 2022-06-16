@@ -10,3 +10,4 @@ const createMosaicImage = criarMosaicoImagem_1.default;
 exports.createMosaicImage = createMosaicImage;
 const createPixage = gerarPiximagem_1.default;
 exports.createPixage = createPixage;
+//# sourceMappingURL=index.js.map

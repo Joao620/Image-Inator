@@ -1,6 +1,6 @@
-import GPU, { IGPUKernelSettings } from 'gpu.js'
+import GPU, { IGPUKernelSettings, IKernelRunShortcut } from 'gpu.js'
 import { calcularMediaCores, BFKNNS } from '../kernels'
-import {ColecaoPixagem, cor, ImagemParaMosaico} from '../types'
+import type {ColecaoPixagem, cor, ImagemParaMosaico} from '../types'
 
 export default function comparar(colecaoPixagem: ColecaoPixagem, imagemParaMosaico: ImagemParaMosaico, cpuMode: boolean){
   const { imagem, quantDivisoesLargura, quantDivisoesAltura } = imagemParaMosaico
@@ -48,7 +48,7 @@ function compararBlocosParecidos(mediaCoresMosaico: cor[][], coresPixagem: cor[]
     argumentTypes: {coresImagemMosaico: 'Array2D(3)', coresPixagem: 'Array1D(3)'},
   }
 
-  const kernelCores = gpu.createKernel(BFKNNS, configs)
+  const kernelCores: IKernelRunShortcut = gpu.createKernel(BFKNNS, configs)
 
   const resultadoKernelCores = kernelCores(mediaCoresMosaico, coresPixagemValues) as Float32Array[]
 

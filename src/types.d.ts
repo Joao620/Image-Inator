@@ -25,3 +25,15 @@ export interface ImagemParaMosaico {
   readonly tamDivisoesLargura: number
   readonly tamDivisoesAltura: number
 }
+
+export interface OpcoesPixImage {
+  readonly aspectRatio: number
+  readonly reducaoImagemFinal: number
+  readonly cpuMode: boolean
+}
+
+export interface OpcoesCriarMosaico {
+  readonly aspectRatio: number
+  readonly reducaoImagemFinal: number
+  readonly cpuMode: boolean
+}

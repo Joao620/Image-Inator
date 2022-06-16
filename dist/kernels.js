@@ -26,8 +26,10 @@ exports.calcularMediaCores = calcularMediaCores;
 function BFKNNS(coresImagemMosaico, corPixagem) {
     const { x, y } = this.thread;
     const threadCor = coresImagemMosaico[y][x];
-    let pixagemMaisProxima = 0.0;
+    let pixagemMaisProxima = 0;
     let valorPixagemMaisProxima = 99999999.0;
+    let segundaPixagemMaisProxima = 0;
+    let segundoValorPixagemMaisProxima = 99999999.0;
     for (let i = 0; i < this.constants.quantCoresPixagem; i++) {
         const pixagemAtual = corPixagem[i];
         const catetoX = Math.abs(pixagemAtual[0] - threadCor[0]);
@@ -35,10 +37,24 @@ function BFKNNS(coresImagemMosaico, corPixagem) {
         const catetoZ = Math.abs(pixagemAtual[2] - threadCor[2]);
         const distancia = catetoX + catetoY + catetoZ;
         if (distancia < valorPixagemMaisProxima) {
+            segundaPixagemMaisProxima = pixagemMaisProxima;
+            segundoValorPixagemMaisProxima = valorPixagemMaisProxima;
             pixagemMaisProxima = i;
             valorPixagemMaisProxima = distancia;
         }
+        else if (distancia < segundoValorPixagemMaisProxima) {
+            segundaPixagemMaisProxima = i;
+            segundoValorPixagemMaisProxima = distancia;
+        }
     }
-    return pixagemMaisProxima;
+    let indexMatrix = [
+        [0 / 4, 3 / 4],
+        [2 / 4, 1 / 4],
+    ];
+    let matrixX = x % 2;
+    let matrixY = y % 2;
+    const proximidadePixagemMaisProxima = (segundaPixagemMaisProxima - pixagemMaisProxima) / (segundaPixagemMaisProxima + pixagemMaisProxima);
+    return proximidadePixagemMaisProxima < indexMatrix[matrixX][matrixY] ? pixagemMaisProxima : segundaPixagemMaisProxima;
 }
 exports.BFKNNS = BFKNNS;
+//# sourceMappingURL=kernels.js.map
