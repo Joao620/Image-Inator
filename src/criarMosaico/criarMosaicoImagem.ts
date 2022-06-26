@@ -9,6 +9,7 @@ import type { GPUVariableType, IKernelRunShortcut, Texture } from "gpu.js";
 import { BFKNNS, calcularMediaCores } from "../kernels";
 import { createCanvas, Image } from "canvas";
 import GPU from "gpu.js";
+import {exit} from "process";
 
 export default function imageMosaicFactory(
   imagem: Image,
@@ -23,7 +24,10 @@ export default function imageMosaicFactory(
   const kernelMediaCores = gpu.createKernel(calcularMediaCores, {
     dynamicOutput: true,
     dynamicArguments: true,
-    pipeline: true,
+    constants: {
+      maxLoopX: 8,
+      maxLoopY: 8,
+    }
   });
   const kernelListaPixagens = gpu.createKernel(BFKNNS, {
     dynamicOutput: true,
@@ -77,6 +81,10 @@ function criarImagemMosaico(
     imagemParaMosaico.quantDivisoesAltura,
   ])
 
+  console.log(kernelMediaCores.toString(imagemDimensional, imagemParaMosaico.tamDivisoesLargura, imagemParaMosaico.tamDivisoesAltura))
+
+  exit()
+
   const mediaCoresResultado = kernelMediaCores(
     imagemDimensional,
     imagemParaMosaico.tamDivisoesLargura,
@@ -88,8 +96,9 @@ function criarImagemMosaico(
     colecaoPixagem.cores
   ) as Float32Array[]
 
+
   console.log(
-    mediaCoresResultado.toArray()
+    mediaCoresResultado
   )
 
   console.log(

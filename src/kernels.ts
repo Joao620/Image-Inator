@@ -1,10 +1,7 @@
 import { IConstantsThis, IKernelFunctionThis } from "gpu.js";
 
 interface calcularMediaCoresThis extends IKernelFunctionThis {
-  constants: {
-    tamDivisoesLargura: number,
-    tamDivisoesAltura: number,
-  };
+  constants: { maxLoopX : number, maxLoopY : number }
 }
 
 //imagem com os eixos imagem[y][x], centro top left
@@ -22,11 +19,16 @@ export function calcularMediaCores(
 
   for (let x = initX; x < initX + tamDivisoesLargura; x++) {
     for (let y = initY; y < initY + tamDivisoesAltura; y++) {
-      somaR += imagem[y][x][0] * imagem[y][x][0];
-      somaG += imagem[y][x][1] * imagem[y][x][1];
-      somaB += imagem[y][x][2] * imagem[y][x][2];
+      //somaR += imagem[y][x][0] * imagem[y][x][0];
+      //somaG += imagem[y][x][1] * imagem[y][x][1];
+      //somaB += imagem[y][x][2] * imagem[y][x][2];
+      somaR += Math.pow(imagem[y][x][0], 2)
+      somaG += Math.pow(imagem[y][x][1], 2)
+      somaB += Math.pow(imagem[y][x][2], 2)
     }
   }
+
+  //return [x, y, 90]
 
   let totalPixels = tamDivisoesLargura * tamDivisoesAltura;
 

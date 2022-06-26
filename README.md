@@ -28,11 +28,7 @@ Now, for the create of the proper image mosaic, you will do the following
 `TODO`
 
 ## Work To Do
-- [ ] Do a browser Build
-- [ ] Make a website using it
-- [ ] Make the command line executable
-- [ ] Make accessible as a module
-- [ ] Clean up the code
+- [ ] stop using gpu.js, this is hell in earth
 
 ##  Meta
 
