@@ -11,7 +11,7 @@ export interface ImagemComNome extends Imagem {
 export type cor = [number, number, number]
 
 export interface ColecaoPixagem {
-  readonly imagem: Image
+  readonly atlas: Image
   readonly larguraIndividual: number
   readonly alturaIndividial: number
   readonly quantidadePixagens: number
@@ -35,5 +35,4 @@ export interface OpcoesPixImage {
 export interface OpcoesCriarMosaico {
   readonly aspectRatio: number
   readonly reducaoImagemFinal: number
-  readonly cpuMode: boolean
 }

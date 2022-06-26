@@ -1,13 +1,15 @@
-import GPU, { IGPUKernelSettings, IKernelRunShortcut } from 'gpu.js'
+import GPU from 'gpu.js'
+import type { IGPUKernelSettings, IKernelRunShortcut } from 'gpu.js'
 import { calcularMediaCores, BFKNNS } from '../kernels'
 import type {ColecaoPixagem, cor, ImagemParaMosaico} from '../types'
 
-export default function comparar(colecaoPixagem: ColecaoPixagem, imagemParaMosaico: ImagemParaMosaico, cpuMode: boolean){
+export default function comparar(kernelComparacao: IKernelRunShortcut, colecaoPixagem: ColecaoPixagem, imagemParaMosaico: ImagemParaMosaico){
+  const cpuMode = true
   const { imagem, quantDivisoesLargura, quantDivisoesAltura } = imagemParaMosaico
   const coresImagemPrincipal = mediaCoresDivisoes(imagem, quantDivisoesLargura, quantDivisoesAltura, cpuMode)
 
   const blocosParecidos =  compararBlocosParecidos(coresImagemPrincipal, colecaoPixagem.cores, cpuMode)
-
+  
   return blocosParecidos
 }
 
@@ -29,15 +31,12 @@ function mediaCoresDivisoes(imagem: ImageData, quantDivisoesLargura: number, qua
   const imagemDimensional = new GPU.Input(imagem.data, [4, imagem.width, imagem.height])
 
   const resultadoKernelCores = kernelCores(imagemDimensional) as cor[][]
+  console.log(kernelCores.toString(imagemDimensional), '\n\n\n')
 
   return resultadoKernelCores
 }
 
 function compararBlocosParecidos(mediaCoresMosaico: cor[][], coresPixagem: cor[], cpuMode: boolean){
-  const coresPixagemValues = coresPixagem.map(cor => (
-    Object.values(cor)
-  ))
-
   const gpu = new GPU.GPU({
     mode: cpuMode ? 'cpu' : 'gpu'
   })
@@ -50,7 +49,9 @@ function compararBlocosParecidos(mediaCoresMosaico: cor[][], coresPixagem: cor[]
 
   const kernelCores: IKernelRunShortcut = gpu.createKernel(BFKNNS, configs)
 
-  const resultadoKernelCores = kernelCores(mediaCoresMosaico, coresPixagemValues) as Float32Array[]
+  const resultadoKernelCores = kernelCores(mediaCoresMosaico, coresPixagem) as Float32Array[]
+
+  console.log(kernelCores.toString(mediaCoresMosaico, coresPixagem), '\n\n\n')
 
   return resultadoKernelCores
 }

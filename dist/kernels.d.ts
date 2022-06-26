@@ -8,11 +8,6 @@ interface calcularMediaCoresThis extends IKernelFunctionThis {
     };
 }
 export declare function calcularMediaCores(this: calcularMediaCoresThis, imagem: number[][][]): number[];
-interface BFKNNSThis extends IKernelFunctionThis {
-    constants: {
-        quantCoresPixagem: number;
-    };
-}
-export declare function BFKNNS(this: BFKNNSThis, coresImagemMosaico: number[][][], corPixagem: number[][]): number;
+export declare function BFKNNS(this: IKernelFunctionThis, coresImagemMosaico: number[][][], corPixagem: number[][], quantCoresPixagem: number): number;
 export {};
 //# sourceMappingURL=kernels.d.ts.map

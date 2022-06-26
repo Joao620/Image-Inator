@@ -1,10 +1,7 @@
-import criarPixagem from './criarPixagem/gerarPiximagem'
-import criarMosaicoImagem from './criarMosaico/criarMosaicoImagem'
-
-const createMosaicImage = criarMosaicoImagem
-const createPixage = criarPixagem
+import createPixage from './criarPixagem/gerarPiximagem'
+import imageMosaicFactory from './criarMosaico/criarMosaicoImagem'
 
 export { 
-  createMosaicImage,
+  imageMosaicFactory,
   createPixage
 }

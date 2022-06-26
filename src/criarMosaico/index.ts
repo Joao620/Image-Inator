@@ -18,11 +18,11 @@ export default async function nodeWrapper(imagePath: string, piximageDir: string
   const piximageConfig = JSON.parse(piximageConfigBuffer)
   const cores = Object.values(piximageConfig) as cor[]
 
-  const opcoesCriarMosaico: OpcoesCriarMosaico = {
-    cpuMode: false,
-    reducaoImagemFinal: 1,
-    aspectRatio: 1,
-  }
+  //const opcoesCriarMosaico: OpcoesCriarMosaico = {
+    //cpuMode: false,
+    //reducaoImagemFinal: 1,
+    //aspectRatio: 1,
+  //}
 
-  await criarImagemMosaico(imagemParaMosaico, cores, imagemPixagem, opcoesCriarMosaico)
+  //await criarImagemMosaico(imagemParaMosaico, cores, imagemPixagem, opcoesCriarMosaico)
 }

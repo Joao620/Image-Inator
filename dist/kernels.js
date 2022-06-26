@@ -23,14 +23,14 @@ function calcularMediaCores(imagem) {
     return [somaR, somaG, somaB];
 }
 exports.calcularMediaCores = calcularMediaCores;
-function BFKNNS(coresImagemMosaico, corPixagem) {
+function BFKNNS(coresImagemMosaico, corPixagem, quantCoresPixagem) {
     const { x, y } = this.thread;
     const threadCor = coresImagemMosaico[y][x];
     let pixagemMaisProxima = 0;
     let valorPixagemMaisProxima = 99999999.0;
     let segundaPixagemMaisProxima = 0;
     let segundoValorPixagemMaisProxima = 99999999.0;
-    for (let i = 0; i < this.constants.quantCoresPixagem; i++) {
+    for (let i = 0; i < quantCoresPixagem; i++) {
         const pixagemAtual = corPixagem[i];
         const catetoX = Math.abs(pixagemAtual[0] - threadCor[0]);
         const catetoY = Math.abs(pixagemAtual[1] - threadCor[1]);

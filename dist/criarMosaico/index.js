@@ -1,9 +1,5 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const criarMosaicoImagem_1 = __importDefault(require("./criarMosaicoImagem"));
 const fs_1 = require("fs");
 const path_1 = require("path");
 const canvas_1 = require("canvas");
@@ -21,12 +17,6 @@ async function nodeWrapper(imagePath, piximageDir, cpuMode, proporcaoPiximagem) 
     const piximageConfigBuffer = (0, fs_1.readFileSync)((0, path_1.join)(piximageDir, 'seed.json'), 'utf8');
     const piximageConfig = JSON.parse(piximageConfigBuffer);
     const cores = Object.values(piximageConfig);
-    const opcoesCriarMosaico = {
-        cpuMode: false,
-        reducaoImagemFinal: 1,
-        aspectRatio: 1,
-    };
-    await (0, criarMosaicoImagem_1.default)(imagemParaMosaico, cores, imagemPixagem, opcoesCriarMosaico);
 }
 exports.default = nodeWrapper;
 //# sourceMappingURL=index.js.map

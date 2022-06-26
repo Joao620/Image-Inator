@@ -1,6 +1,4 @@
-import criarPixagem from './criarPixagem/gerarPiximagem';
-import criarMosaicoImagem from './criarMosaico/criarMosaicoImagem';
-declare const createMosaicImage: typeof criarMosaicoImagem;
-declare const createPixage: typeof criarPixagem;
-export { createMosaicImage, createPixage };
+import createPixage from './criarPixagem/gerarPiximagem';
+import imageMosaicFactory from './criarMosaico/criarMosaicoImagem';
+export { imageMosaicFactory, createPixage };
 //# sourceMappingURL=index.d.ts.map
